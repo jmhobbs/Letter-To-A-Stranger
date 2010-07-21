@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+
+POP_IS_SSL=False
+POP_SERVER="localhost"
+POP_PORT=110
+POP_USER="username"
+POP_PASSWORD="password"
+
+SMTP_SERVER="localhost"
+SMTP_USER="username"
+SMTP_PASSWORD="password"
