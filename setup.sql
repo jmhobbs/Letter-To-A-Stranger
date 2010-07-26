@@ -19,7 +19,7 @@ CREATE TABLE `letter_chains` (
 	`origin_id` INTEGER UNSIGNED NOT NULL,
 	`replier_id` INTEGER UNSIGNED DEFAULT NULL,
 	`started` DATETIME NOT NULL,
-	`linked` DA
+	`linked` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `unique_slugs`(`slug`)
 ) ENGINE = MyISAM;
