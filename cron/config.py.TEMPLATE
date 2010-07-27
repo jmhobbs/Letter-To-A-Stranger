@@ -1,11 +1,69 @@
 # -*- coding: utf-8 -*-
 
-POP_IS_SSL=False
-POP_SERVER="localhost"
-POP_PORT=110
-POP_USER="username"
-POP_PASSWORD="password"
+POP = {
+	'register': {
+		'ssl': False,
+		'server': 'localhost',
+		'port': 110,
+		'user': 'username',
+		'password': 'password'
+	},
+	'quit': {
+		'ssl': False,
+		'server': 'localhost',
+		'port': 110,
+		'user': 'username',
+		'password': 'password'
+	},
+	'stranger': {
+		'ssl': False,
+		'server': 'localhost',
+		'port': 110,
+		'user': 'username',
+		'password': 'password'
+	},
+	'spam': {
+		'ssl': False,
+		'server': 'localhost',
+		'port': 110,
+		'user': 'username',
+		'password': 'password'
+	},
+	'vulgar': {
+		'ssl': False,
+		'server': 'localhost',
+		'port': 110,
+		'user': 'username',
+		'password': 'password'
+	}
+}
 
-SMTP_SERVER="localhost"
-SMTP_USER="username"
-SMTP_PASSWORD="password"
+SMTP = {
+	'register': {
+		'server': 'localhost',
+		'user': 'username',
+		'password': 'password'
+	},
+	'quit': {
+		'server': 'localhost',
+		'user': 'username',
+		'password': 'password'
+	},
+	'stranger': {
+		'server': 'localhost',
+		'user': 'username',
+		'password': 'password'
+	},
+	'spam': {
+		'server': 'localhost',
+		'user': 'username',
+		'password': 'password'
+	},
+	'vulgar': {
+		'server': 'localhost',
+		'user': 'username',
+		'password': 'password'
+	}
+}
+
+DATABASE = 'mysql://username:password@localhost/ltas'
