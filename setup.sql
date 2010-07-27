@@ -18,7 +18,7 @@ CREATE TABLE `users` (
 	`letters_sent` INTEGER UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Just a counter of total letters initiated.',
 	`replys_completed` INTEGER UNSIGNED NOT NULL DEFAULT 0 COMMENT 'A counter of chains completed.',
 	`replys_dropped` INTEGER UNSIGNED NOT NULL DEFAULT 0 COMMENT 'A counter of chains dropped.',
-	`status` ENUM( 'CONFIRMED', 'DORMANT', 'BAD_ADDRESS' ) COMMENT 'Their current registration status.',
+	`status` ENUM( 'PENDING', 'CONFIRMED', 'DORMANT', 'BAD_ADDRESS' ) COMMENT 'Their current registration status.',
 	`spam_threshold` INTEGER NOT NULL DEFAULT 25 COMMENT 'Their taste for spam.',
 	`vulgarity_threshold` INTEGER NOT NULL DEFAULT 25 COMMENT 'Their taste for vulgarity.',
 	PRIMARY KEY (`id`),
