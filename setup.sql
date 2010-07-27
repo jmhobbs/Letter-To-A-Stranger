@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `registrations`;
+DROP TABLE IF EXISTS `quits`;
+DROP TABLE IF EXISTS `letter_chains`;
+DROP TABLE IF EXISTS `attempted_links`;
+DROP TABLE IF EXISTS `letters`;
+DROP TABLE IF EXISTS `letter_sends`;
+DROP TABLE IF EXISTS `vulgar_logs`;
+DROP TABLE IF EXISTS `spam_logs`;
+
 /*
 	A user is a user is a user.
 */
@@ -13,7 +23,29 @@ CREATE TABLE `users` (
 	`vulgarity_threshold` INTEGER NOT NULL DEFAULT 25 COMMENT 'Their taste for vulgarity.',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `unique_emails`(`email`)
-) ENGINE = MyISAM;
+);
+
+/*
+	When a user is registered, they are stored here.
+*/
+CREATE TABLE `registrations` (
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER UNSIGNED NOT NULL,
+	`recieved` DATETIME NOT NULL,
+	`hash` VARCHAR(40) NOT NULL,
+	PRIMARY KEY ( `id` )
+);
+
+/*
+	When a user quits, that is stored here.
+*/
+CREATE TABLE `quits` (
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER UNSIGNED NOT NULL,
+	`recieved` DATETIME NOT NULL,
+	`hash` VARCHAR(40) NOT NULL,
+	PRIMARY KEY ( `id` )
+);
 
 /*
 	Letters are always bound to chains. Chains are just a way of linking meta data about messages and replys.
@@ -29,8 +61,7 @@ CREATE TABLE `letter_chains` (
 	`state` ENUM( 'PENDING', 'LINKED', 'FAILED', 'SPAM' ) COMMENT 'The state of this chain.',
 	PRIMARY KEY (`id`),
 	UNIQUE INDEX `unique_slugs`(`slug`)
-) ENGINE = MyISAM;
-
+);
 
 /*
 	This is a table to track when un-linked chains are sent out to users
@@ -43,9 +74,9 @@ CREATE TABLE `attempted_links` (
 	`link_expires` DATETIME NOT NULL COMMENT 'When the link will expire.',
 	`link_result` ENUM( 'PENDING', 'LINKED', 'DROPPED', 'FAILED', 'VULGARED', 'SPAMMED' ) COMMENT 'The end result of the link attempt.',
 	`result_time` DATETIME DEFAULT NULL COMMENT 'When the result occurred.',
-	PRIMARY KEY (`letter_id`, `user_id` ),
+	PRIMARY KEY (`letter_chain_id`, `user_id` ),
 	INDEX `expires_search` ( `link_expires`, `link_result` )
-) ENGINE = MyISAM;
+);
 
 /*
 	A single letter sent to or from a stranger.
@@ -63,9 +94,8 @@ CREATE TABLE `letters` (
 	`vulgarity_weight` INTEGER NOT NULL DEFAULT 0 COMMENT 'The amount of vulgarity in this letter.',
 	PRIMARY KEY ( `id` ),
 	INDEX `chain_index` ( `letter_chain_id` ),
-	INDEX `user_index` ( `user_id` ),
-	INDEX `sorting_index` ( `recieved_id` )
-) ENGINE = MyISAM;
+	INDEX `user_index` ( `user_id` )
+);
 
 /*
 	This table documents all outbound stranger mail.
@@ -77,30 +107,30 @@ CREATE TABLE `letter_sends` (
 	`recipient_id` INTEGER UNSIGNED NOT NULL COMMENT 'Who recieved the letter.',
 	`sent` DATETIME NOT NULL COMMENT 'The time it was sent.',
 	`failure` ENUM( 'NONE', 'BAD_ADDRESS' ) COMMENT 'If it fails, how does it fail?',
-	`failure_time` DATETIME DEFAULT NULL COMMENT 'The time it fails, if at all.'
+	`failure_time` DATETIME DEFAULT NULL COMMENT 'The time it fails, if at all.',
 	PRIMARY KEY ( `id` )
-) ENGINE = MyISAM;
+);
 
 /*
 	This logs all mail counted as too vulgar by users
 */
-CREATE TABLE `vulgar_log` (
-	`id` INTEGER UNSIGNED NOT NULL,
+CREATE TABLE `vulgar_logs` (
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	`letter_id` INTEGER UNSIGNED NOT NULL COMMENT 'The letter id.',
 	`marker_id` INTEGER UNSIGNED NOT NULL COMMENT 'The users.id that marked it as vulgar.',
 	`marked_at` DATETIME NOT NULL COMMENT 'When it was marked.',
 	PRIMARY KEY ( `id` ),
 	INDEX ( `letter_id` )
-) ENGINE = MyISAM;
+);
 
 /*
 	This logs all mail counted as spam by users.
 */
-CREATE TABLE `spam_log` (
-	`id` INTEGER UNSIGNED NOT NULL,
+CREATE TABLE `spam_logs` (
+	`id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	`letter_id` INTEGER UNSIGNED NOT NULL COMMENT 'The letter id.',
 	`marker_id` INTEGER UNSIGNED NOT NULL COMMENT 'The users.id that marked it as spam.',
 	`marked_at` DATETIME NOT NULL COMMENT 'When it was marked.',
 	PRIMARY KEY ( `id` ),
 	INDEX ( `letter_id` )
-) ENGINE = MyISAM;
+);
