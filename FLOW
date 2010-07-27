@@ -1,0 +1,50 @@
+# Registration
+
+1. E-mail in to register@lettertoastranger.com
+2. Cronjob pulls registration requests
+3. Checks DB for existing accounts
+4. Creates account
+5. Sends back confirmation
+
+# Account closing
+
+1. E-mail to unsubscribe@ltas.com
+2. Close account
+3. Send confirmation email
+
+# New Letter
+
+1. E-mail in to strangers@lettertoastanger.com
+2. Cronjob pulls letter
+3. Analyzes for spam and for vulgarity ratings
+4. Randomly selects a recipient
+5. Sends to recipient
+
+# Reply to New Letter
+
+1. E-mail in to strangers@lettertoastranger.com
+2. Cronjob pulls letter
+3. Looks for hash marker
+4. If found checks if this is a link connection
+	4a. If so, connects chain
+5. Sends reply on to destination
+
+# Dropped Connection
+
+1. Cronjob finds all expires attempted connections
+2. Drops connections
+3. Finds a new random partner
+4. Sends to recipient (max 3 drops?)
+
+# Spam In
+
+1. E-mail to spam@ltas.com
+2. Find hash marker
+3. Increment spam counter
+
+# Vulgar In
+
+1. E-mail to vulgar@ltas.com
+2. Find hash marker
+3. Increment vulgarity counter
+4. Decrement user vulgarity threshold
